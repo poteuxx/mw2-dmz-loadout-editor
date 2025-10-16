@@ -1,40 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>MWII DMZ Loadout Editor</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MWII DMZ — Loadout Editor (Full Weapon Roster)</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <header>
-      <h1>DMZ Loadout Editor</h1>
+  <div class="app">
+    <header class="hud">
+      <div class="title">
+        <h1>DMZ Loadout Editor</h1>
+        <div class="subtitle">Modern Warfare II — Class Builder (MWII roster)</div>
+      </div>
+      <div class="controls">
+        <button id="saveBuild">Save Loadout</button>
+        <button id="loadBuild">Load Last</button>
+        <button id="resetBuild">Reset</button>
+      </div>
     </header>
-    <div class="container">
-      <aside class="weapon-list">
-        <h2>Weapons</h2>
-        <ul id="weaponList"></ul>
+
+    <main class="workspace" role="application" aria-label="DMZ Loadout Editor">
+      <aside class="left-panel" aria-label="Weapon selection">
+        <div class="panel-title">Weapons</div>
+        <div class="categories" role="tablist">
+          <button class="cat-btn active" data-cat="assault" role="tab">Assault Rifles</button>
+          <button class="cat-btn" data-cat="smg" role="tab">SMGs</button>
+          <button class="cat-btn" data-cat="lmg" role="tab">LMGs</button>
+          <button class="cat-btn" data-cat="marksman" role="tab">Marksman / Snipers</button>
+          <button class="cat-btn" data-cat="shotgun" role="tab">Shotguns</button>
+          <button class="cat-btn" data-cat="handgun" role="tab">Handguns</button>
+          <button class="cat-btn" data-cat="launchers" role="tab">Launchers / Melee</button>
+        </div>
+        <div class="weapon-list" id="weaponList" aria-label="Weapon list"></div>
       </aside>
-      <main class="editor">
-        <div class="weapon-info">
-          <h2 id="weaponName">Select a weapon</h2>
-          <div id="attachmentSlots">
-            <!-- dynamically insert attachment selectors -->
+
+      <section class="center-panel" aria-live="polite">
+        <div class="weapon-header">
+          <div>
+            <h2 id="weaponName">Select a weapon</h2>
+            <div id="weaponMeta" class="meta">Category • Platform</div>
+          </div>
+          <div class="weapon-actions">
+            <label for="viewStyle">Bar style:</label>
+            <select id="viewStyle" aria-label="Bar style">
+              <option value="green">Classic green</option>
+              <option value="mono">Mono (white)</option>
+            </select>
           </div>
         </div>
-        <div class="stats-panel">
-          <h3>Stats</h3>
-          <ul id="statList">
-            <li>Damage: <span id="stat-damage">-</span></li>
-            <li>Fire Rate: <span id="stat-fireRate">-</span></li>
-            <li>Accuracy: <span id="stat-accuracy">-</span></li>
-            <li>Recoil: <span id="stat-recoil">-</span></li>
-            <li>“Exactitude”: <span id="stat-precision">-</span></li>
-          </ul>
+
+        <div class="editor-grid">
+          <div class="attachments panel" aria-label="Attachments">
+            <h3>Attachments</h3>
+            <div id="attachmentSlots" class="attachments-list"></div>
+          </div>
+
+          <div class="stats panel" aria-label="Stats">
+            <h3>Stats</h3>
+            <div class="stat-lines">
+              <div class="stat-row"><div class="stat-label">Damage</div><div class="bar-wrap"><div id="bar-damage" class="bar"></div></div><div id="num-damage" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Fire Rate</div><div class="bar-wrap"><div id="bar-fireRate" class="bar"></div></div><div id="num-fireRate" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Accuracy</div><div class="bar-wrap"><div id="bar-accuracy" class="bar"></div></div><div id="num-accuracy" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Recoil</div><div class="bar-wrap"><div id="bar-recoil" class="bar"></div></div><div id="num-recoil" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Range</div><div class="bar-wrap"><div id="bar-range" class="bar"></div></div><div id="num-range" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Mobility</div><div class="bar-wrap"><div id="bar-mobility" class="bar"></div></div><div id="num-mobility" class="stat-value">-</div></div>
+              <div class="stat-row"><div class="stat-label">Control</div><div class="bar-wrap"><div id="bar-control" class="bar"></div></div><div id="num-control" class="stat-value">-</div></div>
+            </div>
+            <div class="notes">* Precision example: <strong>Precision = (Accuracy × 2) − (Recoil × 0.5)</strong>. Bars are normalized for visual parity with in-game feel.</div>
+          </div>
         </div>
-      </main>
-    </div>
+
+        <div class="preview panel" aria-label="Loadout preview">
+          <h3>Loadout Preview</h3>
+          <div id="previewList" class="preview-list">No weapon selected.</div>
+        </div>
+      </section>
+
+      <aside class="right-panel" aria-label="Saved builds">
+        <div class="panel-title">Saved Builds</div>
+        <div id="savedBuilds" class="saved-list"></div>
+
+        <div class="panel-title">Tips</div>
+        <ul class="tips">
+          <li>Bars + numbers give immediate visual feedback — like the in-game editor.</li>
+          <li>Hover an attachment option to see the stat delta tooltip.</li>
+          <li>Saved builds are stored locally in your browser.</li>
+        </ul>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      MWII-style editor — representative stats & attachments (ready to expand). Want me to import official/current in-game values next? I can add that.
+    </footer>
   </div>
-  <script src="script.js"></script>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
