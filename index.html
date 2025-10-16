@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MWII DMZ Loadout Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>DMZ Loadout Editor</h1>
+    </header>
+    <div class="container">
+      <aside class="weapon-list">
+        <h2>Weapons</h2>
+        <ul id="weaponList"></ul>
+      </aside>
+      <main class="editor">
+        <div class="weapon-info">
+          <h2 id="weaponName">Select a weapon</h2>
+          <div id="attachmentSlots">
+            <!-- dynamically insert attachment selectors -->
+          </div>
+        </div>
+        <div class="stats-panel">
+          <h3>Stats</h3>
+          <ul id="statList">
+            <li>Damage: <span id="stat-damage">-</span></li>
+            <li>Fire Rate: <span id="stat-fireRate">-</span></li>
+            <li>Accuracy: <span id="stat-accuracy">-</span></li>
+            <li>Recoil: <span id="stat-recoil">-</span></li>
+            <li>“Exactitude”: <span id="stat-precision">-</span></li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
